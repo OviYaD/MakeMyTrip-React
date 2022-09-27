@@ -186,17 +186,26 @@ h3 {
   margin-top: 90px;
   border-radius: 30px;
   width: 80%;
-  justify-content: space-evenly;
+  /* justify-content: space-evenly; */
   box-shadow: 0px 1px 15px 1px #7a7a7a;
 }
 .feature-type span i {
-  font-size: 14px;
+  font-size: 20px;
   color: blue;
-  margin: 2px;
+  align-items: center;
+  /* margin: 2px; */
 }
+
 .feature-type p {
   justify-content: center;
-  margin-right: 15px;
+  padding-right: 20px;
+  padding-left: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* padding-right: 15px; */
+
+  border-right: 1px solid rgba(155, 153, 153, 0.377);
 }
 .container-card {
   margin-top: 50px;
