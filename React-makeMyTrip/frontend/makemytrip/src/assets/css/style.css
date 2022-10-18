@@ -1,27 +1,40 @@
-body {
-  font-family: "Lato";
-  color: rgb(107, 107, 107);
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap");
+* {
+  font-family: "Lato", sans-serif;
+  color: rgb(87, 86, 86);
+  /* margin: 0px;
+  padding: 0px; */
 }
 .background {
   width: 100%;
   background: #f2f2f2;
   background-repeat: no-repeat;
   background-image: linear-gradient(to bottom, #051322, #15457c);
-  background-size: 100% 550px;
-  display: flex;
-  justify-content: center;
+  background-size: 100% 550px !important;
 }
-.container {
+*::-webkit-scrollbar {
+  display: none;
+}
+
+.container-holder {
   width: 1200px;
+  margin: auto;
+  /* margin-left: 40px; */
+  padding-top: 10px;
 }
 .logo {
+  width: 113px;
   height: 36px;
-  weight: 113px;
+}
+.a {
+  text-decoration: none;
+  /* color: none; */
 }
 .data {
   display: flex;
   justify-content: center;
   position: relative;
+  /* margin-left: 50px; */
 }
 .categories {
   background-color: white;
@@ -49,21 +62,20 @@ body {
 
 .tickets {
   background-color: white;
-  width: 1200px;
-  height: 300px;
-  position: absolute;
-  top: 70px;
   z-index: 1;
   border-radius: 10px;
   padding: 20px;
+  margin-bottom: 100px;
 }
 .ticket-type {
   margin-top: 20px;
   font-size: 14px;
   font-weight: 800;
+  display: flex;
 }
 .ticket-type span {
   padding: 5px;
+  margin: 0px;
 }
 .ticket-type span i {
   font-size: 14px;
@@ -72,20 +84,30 @@ body {
   background-color: rgb(211, 211, 211);
   border-radius: 30px;
 }
+.latoBold {
+  font-weight: 700;
+}
 .flight-search {
+  font-family: "Lato";
+  z-index: 3;
   border: 1px solid rgb(230, 230, 230);
   display: flex;
-  margin-top: 10px;
+  margin: 10px;
   border-radius: 10px;
+  padding: -20px;
 }
 .flight {
-  margin: 15px;
+  margin: 10px 20px;
   color: rgb(68, 67, 67);
   width: 300px;
+  /* font-size: 1px; */
   border-right: 1px solid rgb(230, 230, 230);
 }
+.lineHeight36 {
+  line-height: 36px;
+}
 .departure {
-  margin: 15px;
+  margin: 10px;
   color: rgb(68, 67, 67);
   width: 130px;
   border-right: 1px solid rgb(230, 230, 230);
@@ -93,9 +115,13 @@ body {
 .departure h1,
 h3 {
   margin: 0px;
+  color: black;
+  font-weight: 600;
 }
 .flight h1 {
   margin: 0px;
+  color: black;
+  font-weight: 900;
 }
 .fa-right-left {
   display: flex;
@@ -113,7 +139,7 @@ h3 {
   margin-left: 5px;
 }
 .fare-search {
-  margin-top: 50px;
+  margin-top: 30px;
   margin-bottom: 25px;
   font-size: 14px;
   display: flex;
@@ -130,7 +156,6 @@ h3 {
   width: 600px;
   display: flex;
   justify-content: center;
-  margin-top: -8px;
 }
 .fare-type span {
   color: black;
@@ -145,11 +170,10 @@ h3 {
   margin: 0px;
 }
 .trending {
-  margin-left: 150px;
+  margin-left: 130px;
   display: flex;
   justify-content: center;
   font-size: 12px;
-  margin-top: 10px;
 }
 .trend-type span i {
   font-size: 14px;
@@ -208,12 +232,17 @@ h3 {
   border-right: 1px solid rgba(155, 153, 153, 0.377);
 }
 .container-card {
+  box-shadow: 0 3px 30px 0 rgb(0 0 0 / 10%);
   margin-top: 50px;
   background-color: white;
   padding-left: 30px;
   padding-top: 10px;
   padding-bottom: 20px;
   border-radius: 10px;
+  width: 1200px;
+  margin: auto;
+  /* margin-left: 50px; */
+  padding-top: 10px;
 }
 .container-card h1 {
   color: black;
@@ -222,7 +251,9 @@ h3 {
   font-size: 40px;
 }
 .download-content {
+  font-family: "Lato";
   display: flex;
+  font-size: 50px;
   justify-content: center;
 }
 .download-content p {
@@ -242,7 +273,7 @@ h3 {
 }
 .dwnld span input {
   width: 300px;
-  height: 15px;
+  height: 40px;
   padding: 10px;
   margin-top: 10px;
 }
@@ -257,6 +288,7 @@ h3 {
   height: 45px;
   width: 160px;
   margin-left: 10px;
+  margin-top: -20px;
 }
 .dwnld-store {
   display: flex;
@@ -269,8 +301,8 @@ h3 {
   color: rgb(22, 22, 22);
 }
 .qr img {
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   margin-left: 20px;
   margin-top: 10px;
 }
@@ -354,6 +386,7 @@ h3 {
 
 .card__title p {
   margin: 0px;
+  color: white;
   font-size: 16px;
   font-weight: 700;
   margin-top: 5px;
@@ -362,6 +395,8 @@ h3 {
 .description {
   margin-top: 100px;
   margin-bottom: 70px;
+  margin-left: 50px;
+  margin-right: 50px;
   position: relative;
 }
 .description h1 {
@@ -378,8 +413,7 @@ h3 {
   position: relative;
   background-color: #e7e7e7;
   display: flex;
-  width: 1340px;
-  margin-left: -100px;
+  margin-left: -50px;
   overflow: hidden;
   padding-bottom: 50px;
 }
@@ -400,20 +434,19 @@ h3 {
 .footer {
   display: flex;
   padding-top: 50px;
+  margin-top: 50px;
   background-color: black;
-  width: 1340px;
-  margin-left: -100px;
   margin-bottom: -100px;
   padding-bottom: 40px;
 }
 .multimedia img {
-  margin-left: 40px;
+  margin-left: 50px;
   width: 30px;
   height: 30px;
 }
 .copyright {
-  /* right: 0; */
-  margin-left: 60%;
+  margin-left: 65%;
+  margin-right: -10px;
   text-align: right;
   color: white;
 }
@@ -499,4 +532,181 @@ h3 {
 }
 .card-pair {
   margin-right: 20px;
+}
+
+.luxeSel {
+  width: 1200px;
+  margin: auto;
+  background-image: url(https://promos.makemytrip.com/Hotels_product/Luxe/bkg-dt.png);
+  margin-bottom: 20px !important;
+  box-sizing: border box;
+  padding: 34px 30px 34px 40px;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  box-shadow: 0px 3px 30px rgb(0 0 0 / 10%);
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  background-color: #fffbf4;
+  cursor: pointer;
+}
+.luxeSel__dtl {
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+.luxeSel__dtl--hdng {
+  font-size: 36px;
+  font-weight: 900;
+  margin-bottom: 5px;
+  color: #e1be5b;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.luxeSel__dtl--desc {
+  font-size: 18px;
+  line-height: 24px;
+  color: #000000;
+}
+.luxeSel__cta {
+  display: inline-flex;
+  background: #e1be5b;
+  box-shadow: 0px 1px 7px rgb(0 0 0 / 21%);
+  border-radius: 64px;
+  padding: 12px 32px;
+  color: #000000;
+  font-size: 14px;
+  font-weight: 900;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15px;
+}
+a {
+  color: var(--color-primary, #008cff);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.luxeSel__list {
+  display: flex;
+  margin-left: 70px;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.luxeSel__list--item {
+  margin-right: 20px;
+  width: 233px;
+  flex-shrink: 0;
+  background: #ffffff;
+  box-shadow: 0px 2px 3px rgb(0 0 0 / 25%);
+  border-radius: 6px;
+  overflow: hidden;
+}
+li {
+  display: list-item;
+  text-align: -webkit-match-parent;
+  list-style: none;
+}
+
+.luxeSel__list--itemImg {
+  height: 170px;
+  display: block;
+}
+.luxeSel__list--itemImg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  max-width: 100%;
+}
+
+.luxeSel__list--itemDtl {
+  padding: 10px 16px;
+  box-sizing: border-box;
+  margin-top: -20px;
+}
+p {
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+}
+.chNavIcon {
+}
+.chSprite {
+  background-image: url(https://imgak.mmtcdn.com/pwa_v3/pwa_commons_assets/desktop/commonHeaderSprite11.webp) !important;
+}
+.chSprite {
+  background-repeat: no-repeat;
+  background-size: 230px 306px;
+}
+.chFlights {
+  height: 34px;
+  width: 40px;
+  background-size: 300px 400px;
+  background-position: -4px -37px;
+}
+.chHomestays {
+  height: 34px;
+  width: 40px;
+  background-size: 300px 400px;
+  background-position: -105px -153px;
+}
+.chHolidays {
+  height: 34px;
+  width: 55px;
+  background-size: 300px 400px;
+  background-position: -70px -235px;
+}
+.chTrains {
+  height: 34px;
+  width: 40px;
+  background-size: 300px 400px;
+  background-position: -179px -37px;
+}
+.chBuses {
+  height: 34px;
+  width: 25px;
+  background-size: 300px 400px;
+  background-position: -121px -38px;
+}
+.chCabs {
+  height: 34px;
+  width: 25px;
+  background-size: 300px 400px;
+  background-position: -154px -39px;
+}
+.chForex {
+  height: 34px;
+  width: 40px;
+  background-size: 300px 400px;
+  background-position: -132px -235px;
+}
+.chCharterFlights {
+  height: 34px;
+  width: 40px;
+  background-size: 300px 400px;
+  background-position: -122px -72px;
+}
+.chActivities {
+  height: 34px;
+  width: 40px;
+  background-size: 300px 400px;
+  background-position: -207px -72px;
+}
+.chHotels {
+  height: 34px;
+  width: 40px;
+  background-size: 300px 400px;
+  background-position: -50px 1px;
+}
+.navOnly .active .chHotels {
+  background-position: -50px 1px;
 }
