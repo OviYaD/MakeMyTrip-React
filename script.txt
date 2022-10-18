@@ -1,0 +1,16 @@
+heloo guys, this is oviya. im here to demonstrate the website which is the clone of makemytrip. 
+
+
+
+
+based on the reviews mentioned for each hotels,
+ it will help us to get to about the quality of the hotel. 
+ And also payments are also flexible within this website iself.
+now lets get into the code of this website.
+here i used react to clone this website.
+
+//react pathi soliruu
+
+Now i'll take you guys through the folder structure.when it comes to react structuring the file places an important role because it gives us clear understanding for future reference
+
+//folder structure 

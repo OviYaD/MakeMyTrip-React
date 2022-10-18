@@ -6,8 +6,8 @@ body {
   width: 100%;
   background: #f2f2f2;
   background-repeat: no-repeat;
-  background-image: linear-gradient(to bottom, #051322, #15457c);
-  background-size: 100% 550px;
+  /* background-image: linear-gradient(to bottom, #051322, #15457c);
+  background-size: 100% 550px; */
   display: flex;
   justify-content: center;
 }
@@ -499,4 +499,9 @@ h3 {
 }
 .card-pair {
   margin-right: 20px;
+}
+.container,
+.page-section {
+  margin: 0 auto;
+  width: 1200px;
 }
