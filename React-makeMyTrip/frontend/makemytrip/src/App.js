@@ -10,6 +10,7 @@ import { Hotels } from "./pages/Hotels";
 import { QueryParam } from "./components/__test__/queryParam";
 import HotelSearch from "./pages/HotelSearch";
 import { DateTime } from "./components/dateTime";
+import { CitySelector } from "./components/Modals/citySelector";
 // import Hotels from "./pages/Hotels";
 import LoginModal from "./components/LoginModal";
 import { LandingContainer } from "./components/landingContainer";
@@ -40,6 +41,7 @@ function App() {
               <Route path="/search" element={<HotelSearch></HotelSearch>} />
               <Route path="/datetime" element={<DateTime />} />
               <Route path="/query" element={<QueryParam />} />
+              <Route path="/cityselect" element={<CitySelector />} />
             </Routes>
           </div>
         </QueryParamProvider>

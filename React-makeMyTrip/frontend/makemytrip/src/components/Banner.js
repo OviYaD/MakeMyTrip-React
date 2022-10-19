@@ -8,6 +8,7 @@ import { flights } from "../utils/FeaturedSearch";
 import { RecentSearch } from "./recentSearch";
 import { Ticket } from "./__test__/ticketCounter/Ticket";
 import { useNavigate } from "react-router-dom";
+import { CitySelector } from "./Modals/citySelector";
 import { LandingContainer } from "./landingContainer";
 import Popup from "reactjs-popup";
 // import "reactjs-popup/dist/index.css";
@@ -21,7 +22,6 @@ export const Banner = () => {
 
   let navigate = useNavigate();
   const handleSearch = () => {
-    
     navigate("/search");
   };
   return (
@@ -84,6 +84,7 @@ export const Banner = () => {
               city="Delhi"
               airport="India"
             ></PlaceSelector>
+            <CitySelector></CitySelector>
 
             <TimeSelector
               caption="CHECK-IN"
