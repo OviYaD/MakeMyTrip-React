@@ -3,8 +3,8 @@ import React from "react";
 export const AboutSite = () => {
   return (
     <>
-      <div class="about-site">
-        <div class="about" style={{ marginLeft: "100px" }}>
+      <div className="about-site">
+        <div className="about" style={{ marginLeft: "100px" }}>
           <h1>Why MakeMyTrip?</h1>
           <p>
             Established in 2000, MakeMyTrip has since positioned itself as one
@@ -19,7 +19,7 @@ export const AboutSite = () => {
             and demands.
           </p>
         </div>
-        <div class="about">
+        <div className="about">
           <h1>Booking Flights with MakeMyTrip</h1>
           <p>
             At MakeMyTrip, you can find the best of deals and cheap air tickets
@@ -36,7 +36,7 @@ export const AboutSite = () => {
             travel needs with us.
           </p>
         </div>
-        <div class="about">
+        <div className="about">
           <h1>Domestic Flights with MakeMyTrip</h1>
           <p>
             MakeMyTrip is India's leading player for flight bookings. With the
