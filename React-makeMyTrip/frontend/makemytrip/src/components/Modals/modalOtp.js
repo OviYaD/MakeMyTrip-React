@@ -1,6 +1,6 @@
 import React from "react";
 
-export const ModalOtp = ({ handleBack, handleLogin }) => {
+export const ModalOtp = ({ handleBack, handleVerifyLogin ,isError}) => {
   const [inputData, setInput] = React.useState();
   const [isDisabled, setDisability] = React.useState(true);
   const handleChange = (e) => {
@@ -11,31 +11,31 @@ export const ModalOtp = ({ handleBack, handleLogin }) => {
 
   return (
     <>
-      <div class="makeFlex hrtlCenter appendBottom20">
-        <a class="modalBack capText font12 latoBlack" onClick={handleBack}>
+      <div className="makeFlex hrtlCenter appendBottom20">
+        <a className="modalBack capText font12 latoBlack" onClick={handleBack}>
           Back
         </a>
       </div>
-      <div class="appendBottom25">
+      <div className="appendBottom25">
         <p
           data-cy="commonModal"
-          class="modalTitle makeFlex hrtlCenter font26 latoBold appendBottom5"
+          className="modalTitle makeFlex hrtlCenter font26 latoBold appendBottom5"
         >
           Verify Your E-mail ID
         </p>
-        <p class="font14 darkGreyText makeFlex">OTP has been sent to EMAIL</p>
+        <p className="font14 darkGreyText makeFlex">OTP has been sent to EMAIL</p>
       </div>
       <form>
-        <div class="modalField makeFlex column appendBottom30">
-          <p class="makeFlex hrtlCenter spaceBetween appendBottom10">
-            <label for="otp" class="font14 latoBold">
-              OTP
+        <div className="modalField makeFlex column appendBottom30">
+          <p className="makeFlex hrtlCenter spaceBetween appendBottom10">
+            <label for="otp" className="font14 latoBold">
+              ENTER OTP
             </label>
           </p>
-          <label for="otp" class="font14 latoBold appendBottom10">
+          <label for="otp" className="font14 latoBold appendBottom10">
             &nbsp;&nbsp;
           </label>
-          <div class="modalFieldInner makeFlex hrtlCenter">
+          <div className="modalFieldInner makeFlex hrtlCenter">
             <input
               type="text"
               id="otp"
@@ -47,11 +47,12 @@ export const ModalOtp = ({ handleBack, handleLogin }) => {
               value={inputData}
               onChange={handleChange}
             />
-            <a class="pushRight modalResetBtn font12 appendRight5 ">
+            <a className="pushRight modalResetBtn font12 appendRight5"   >
               Resend OTP
             </a>
           </div>
-          <span class="validity"></span>
+          {isError?<span data-cy="errorMsg" className="validity font12 redText appendTop5 makeFlex"><span className="appendRight5 popupSprite errorCross"></span>Incorrect OTP Entered. Please try again.</span>:<></>}
+
         </div>
         <div className="btnContainer appendBottom25">
           <button
@@ -59,8 +60,9 @@ export const ModalOtp = ({ handleBack, handleLogin }) => {
             data-cy="continueBtn"
             type="button"
             disabled={isDisabled ? true : false}
-            onClick={handleLogin}
+            onClick={()=>handleVerifyLogin(inputData)}
           >
+            <span style={{ color: "white" }}>Verify &amp; Create Account</span>
             <span style={{ color: "white" }}>Login</span>
           </button>
         </div>

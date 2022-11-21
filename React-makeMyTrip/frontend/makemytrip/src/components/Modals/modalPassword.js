@@ -5,26 +5,22 @@ export const ModalPassword = ({
   handleBack,
   handleLogin,
   handleOtp,
-  handleClose
+  isError,
+  setError
 }) => {
   const [inputData, setInput] = React.useState();
   const [isDisabled, setDisability] = React.useState(true);
+  
+  
   const handleChange = (e) => {
     e.preventDefault();
-    e.target.value.length !== 0 ? setDisability(false) : setDisability(true);
+    // setError(false);
+    e.target.value.length > 6 ? setDisability(false) : setDisability(true);
     setInput(e.target.value);
   };
 
-  const handleClick = (e) => {
-    // e.preventDefault();
-    console.log("clicked");
-    console.log(handleClose);
-    handleClose();
-  };
-  //   console.log(handleSubmit("hi"));
   return (
     <>
-      {/* <h1>jhdjaiusdoiuwi</h1> */}
 
       <div className="makeFlex hrtlCenter appendBottom20">
         <a className="modalBack capText font12 latoBlack" onClick={handleBack}>
@@ -39,6 +35,12 @@ export const ModalPassword = ({
           <span className="font26 latoBlack"> Login With Password </span>
         </p>
         <p className="font14 darkGreyText makeFlex">For account {email}</p>
+
+        {isError && <p className="font12 redText appendTop5 makeFlex serverError hrtlCenter" >
+  <span className="appendRight5 popupSprite errorCross"></span>
+  <span data-cy="serverError" style={{color:"red"}}>Either Username or Password is incorrect.</span>
+</p>}
+
       </div>
       <form>
         <div className="modalField makeFlex column appendBottom30">
@@ -77,7 +79,7 @@ export const ModalPassword = ({
             data-cy="continueBtn"
             type="button"
             disabled={isDisabled ? true : false}
-            onClick={handleClick}
+            onClick={()=>handleLogin(inputData)}
           >
             <span style={{ color: "white" }}>Login</span>
           </button>

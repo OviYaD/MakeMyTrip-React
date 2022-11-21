@@ -13,10 +13,8 @@ export const ModalEmail = ({ handleSubmit }) => {
     console.log("clicked");
     handleSubmit(inputData);
   };
-  //   console.log(handleSubmit("hi"));
   return (
     <>
-      {/* <h1>jhdjaiusdoiuwi</h1> */}
       <div className="tertiaryBg">&nbsp;</div>
       <div className="appendBottom25">
         <ul className="makeFlex textCenter latoBlack font16 capText noSelection">
@@ -88,7 +86,7 @@ export const ModalEmail = ({ handleSubmit }) => {
       <div className="makeFlex column hrtlCenter loginFooter">
         <p className="textCenter appendBottom5 appendTop20 font12 blackText lineHeight18">
           By proceeding, you agree to MakeMyTrip's &nbsp;
-          <a>Privacy Policy</a>, <a>User Agreement</a>&nbsp;and&nbsp;
+          <a href="#">Privacy Policy</a>, <a>User Agreement</a>&nbsp;and&nbsp;
           <a>T&amp;Cs</a>
         </p>
       </div>

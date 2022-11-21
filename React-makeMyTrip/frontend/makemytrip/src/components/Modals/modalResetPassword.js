@@ -17,34 +17,34 @@ export const ModalResetPassword = ({ handleBack, handleOtp }) => {
   };
   return (
     <>
-      <div class="makeFlex hrtlCenter appendBottom20">
-        <a class="modalBack capText font12 latoBlack" onClick={handleBack}>
+      <div className="makeFlex hrtlCenter appendBottom20">
+        <a className="modalBack capText font12 latoBlack" onClick={handleBack}>
           Back
         </a>
       </div>
-      <div class="appendBottom25">
+      <div className="appendBottom25">
         <p
           data-cy="commonModal"
-          class="modalTitle makeFlex hrtlCenter font26 latoBold appendBottom5"
+          className="modalTitle makeFlex hrtlCenter font26 latoBold appendBottom5"
         >
           Reset Password
         </p>
-        <p class="font14 darkGreyText makeFlex">
+        <p className="font14 darkGreyText makeFlex">
           We will send you a reset OTP on your registered E-mail ID or Mobile
           Number
         </p>
       </div>
       <form>
-        <div class="modalField makeFlex column appendBottom30">
-          <p class="makeFlex hrtlCenter spaceBetween appendBottom10">
-            <label for="resetEmailPass" class="font14 latoBold">
+        <div className="modalField makeFlex column appendBottom30">
+          <p className="makeFlex hrtlCenter spaceBetween appendBottom10">
+            <label for="resetEmailPass" className="font14 latoBold">
               Registered Email or Mobile Number
             </label>
           </p>
-          <div class="modalFieldInner makeFlex hrtlCenter">
+          <div className="modalFieldInner makeFlex hrtlCenter">
             <input
               type="text"
-              class="font14"
+              className="font14"
               autocomplete="off"
               id="resetEmailPass"
               name="resetEmailPass"
