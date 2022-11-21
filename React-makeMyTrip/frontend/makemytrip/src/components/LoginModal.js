@@ -2,53 +2,101 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
-import { getCheckUser, getVerificationOtp } from "../services/user";
+import { getCheckUser, getVerificationOtp,loginPassword,loginOtp, getUserDetails } from "../services/user";
 import { ModalEmail } from "./Modals/modalEmail";
 import { ModalPassword } from "./Modals/modalPassword";
 import { ModalResetPassword } from "./Modals/modalResetPassword";
 import { ModalOtp } from "./Modals/modalOtp";
+import { UserContext } from '../api/user';
+
+
+
 export default function LoginModal() {
+  // const {userInfo,setUserInfo} = React.useContext(UserContext);
+  const [open, setOpen] = React.useState(false);
   const [isEmailEnabled, setEmailEnabler] = React.useState(true);
   const [isPasswordEnabled, setPasswordEnabler] = React.useState(false);
-  const [isResetPassword, setResetPasswordEnabler] = React.useState(false);
+  const [isRestPasswordEnabled, setResetPasswordEnabler] = React.useState(false);
   const [isOtpEnabled, setOtpEnabler] = React.useState(false);
-  const [open, setOpen] = React.useState(false);
-  const [userExist, setUser] = React.useState(false);
   const [email, setEmail] = React.useState();
-  const [isDisabled, setDisability] = React.useState(false);
+  const [otp, setOpt] = React.useState();
+  const [password, setPassword] = React.useState();
+  const [isError, setError] = React.useState(false);
+  // const [isDisabled, setDisability] = React.useState(false);
+
+
+
   const handleOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
   };
-  const handleLogin = () => {
-    console.log("login");
-  };
-  const handleReset = () => {
-    setEmailEnabler(false);
-    setUser(false);
-    setResetPasswordEnabler(true);
-  };
+
   const handleBack = () => {
     setEmailEnabler(true);
-    setUser(false);
+    setPasswordEnabler(false);
+    setOtpEnabler(false);
     setResetPasswordEnabler(false);
+  };
+
+  const handleVerifyLogin= async(otp)=>{
+    const user=await loginOtp(email,otp);
+    if(!user){
+      setError(true);
+    }
+    else{
+      getUserDetails();
+      handleClose();
+    }
+
+
+  }
+  const handleLogin = async(password) => {
+    const user=await loginPassword(email,password);
+    if(!user){
+      setError(true);
+    }
+    else{
+      const user=getUserDetails();
+      handleClose();
+    }
+  };
+
+
+  const handleReset = () => {
+    setEmailEnabler(false);
+    // setUser(false);
+    setResetPasswordEnabler(true);
   };
   const handleOtp = () => {
     console.log("handle otp");
+    loginOtp(email);
     setEmailEnabler(false);
-    setUser(false);
+    setPasswordEnabler(false);
+    setOtpEnabler(true);
     setResetPasswordEnabler(false);
+
   };
   const handleSubmit = async (data) => {
     const user = await getCheckUser(data);
-    setEmailEnabler(false);
-    console.log(data);
     setEmail(data);
+    console.log(user);
+    if(user){
+      setEmailEnabler(false);
+      setPasswordEnabler(true);
+      setOtpEnabler(false);
+      setResetPasswordEnabler(false);
+    }
+    else{
+      setEmailEnabler(false);
+      setPasswordEnabler(false);
+      setOtpEnabler(true);
+      setResetPasswordEnabler(false);
+    }
+    // user ? setPasswordEnabler(true) : setOtpEnabler(true);
+    console.log(isEmailEnabled,isPasswordEnabled,isOtpEnabled,isRestPasswordEnabled);
     getVerificationOtp(data);
-    user ? setUser(true) : setUser(true);
-    console.log(userExist);
   };
   return (
     <div>
@@ -62,7 +110,7 @@ export default function LoginModal() {
           </span>
         </span>
 
-        <div class="makeFlex column flexOne whiteText latoBold">
+        <div className="makeFlex column flexOne whiteText latoBold">
           <p
             data-cy="LoginHeaderText"
             style={{ color: "white", marginRight: "35px" }}
@@ -79,7 +127,27 @@ export default function LoginModal() {
       >
         <Box>
           <section className=" modal displayBlock modalLogin dynHeight personal modalMain tcnFooter">
-            {isEmailEnabled ? (
+          {isEmailEnabled && <ModalEmail handleSubmit={handleSubmit} email={email}></ModalEmail>}
+          {isPasswordEnabled && <ModalPassword
+                email={email}
+                handleBack={handleBack}
+                handleLogin={handleLogin}
+                handleReset={handleReset}
+                handleOtp={handleOtp}
+                isError={isError}
+                setEmail={setEmail}
+              ></ModalPassword>}
+            {isRestPasswordEnabled &&  <ModalResetPassword handleBack={handleBack}></ModalResetPassword>}
+            {isOtpEnabled &&  <ModalOtp
+                handleBack={handleBack}
+                // handleLogin={handleLogin}
+                handleVerifyLogin={handleVerifyLogin}
+                handleOtp={handleOtp}
+                isError={isError}
+              ></ModalOtp>}
+
+
+            {/* {isEmailEnabled ? (
               <ModalEmail handleSubmit={handleSubmit}></ModalEmail>
             ) : userExist ? (
               <ModalPassword
@@ -89,14 +157,15 @@ export default function LoginModal() {
                 handleReset={handleReset}
                 handleOtp={handleOtp}
               ></ModalPassword>
-            ) : isResetPassword ? (
+            ) : isRestPasswordEnabled ? (
               <ModalResetPassword handleBack={handleBack}></ModalResetPassword>
             ) : (
               <ModalOtp
                 handleBack={handleBack}
                 handleLogin={handleLogin}
+                isError={isError}
               ></ModalOtp>
-            )}
+            )} */}
           </section>
         </Box>
       </Modal>
