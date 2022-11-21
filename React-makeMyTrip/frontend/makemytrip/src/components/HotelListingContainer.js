@@ -1,7 +1,68 @@
-import React from "react";
+import React,{useContext,useEffect,useState} from "react";
+import { getHotel } from "../services/hotel";
+import {useNavigate,Link} from "react-router-dom";
+import {SearchContext} from "../api/search";
+import {getTax} from "../services/tax";
+import {useSelector} from "react-redux";
+import { useDispatch  } from "react-redux";
+import {setParam} from "../redux/slices/paramSlice";
+import { getHotelsByFilters } from "../services/filters";
+import { setHotelInfo } from "../redux/slices/hotelSlice";
+import { LoadingContainer } from './loaders/loadingContainer';
+export const HotelListingContainer =()=>{
+  const dispatch = useDispatch();
+  const {searchInfo,setSearchInfo} = useContext(SearchContext);
+  const hotels = useSelector((state)=>state.hotels)
+  const params = useSelector((state)=>state.param);
+  const [loading,setLoading] = useState(true);
 
-export class HotelListingContainer extends React.Component {
-  render() {
+
+  useEffect(()=>{
+    setLoading(true)
+    setTimeout(() => {
+      setLoading((loading)=>!loading)
+    }, 1000);
+  },[params])
+
+
+  console.log("helooo hotels",hotels);
+  const navigate = useNavigate();
+
+  const getHotelId = async(hotelId) =>{
+    // const hotelInfo= await getHotel(hotelId);
+    setSearchInfo({...searchInfo,
+    hotelId:hotelId});
+    dispatch(setParam({hotelId}));
+    // console.log(searchInfo)
+  }
+  if(loading){
+    return <>
+    <div id="hotelListingContainer" className="listingWrap">
+      <div>
+        <div
+              className="infinite-scroll-component"
+              style={{ height: "auto", overflow: "auto" }}
+            >
+            <div className="latoBlack blackText appendBottom20">
+              <div
+                  id="RECENTLY_VIEWED_HOTELS"
+                  className="makeFlex hrtlCenter"
+                >
+                  <p className="font28">Recently Viewed</p>
+              </div>
+              <p className="appendBottom15"></p>
+            </div>
+            <div>
+            <LoadingContainer></LoadingContainer>
+            <LoadingContainer></LoadingContainer>
+            <LoadingContainer></LoadingContainer>
+            </div>
+        </div>
+      </div>
+    </div>       
+    </>
+  }
+  else{
     return (
       <>
         <div id="hotelListingContainer" className="listingWrap">
@@ -20,17 +81,375 @@ export class HotelListingContainer extends React.Component {
                 <p className="appendBottom15"></p>
               </div>
               <div>
-                <div
-                  className="listingRowOuter hotelTileDt makeRelative"
-                  id="Listing_hotel_0"
-                  itemscope=""
-                  itemtype="http://schema.org/Hotel"
-                >
+                
+
+
+                {hotels.length>0 && hotels.map((hotel,index)=>{
+                  return (
+                  <>
+                    <div
+                    className="listingRowOuter hotelTileDt makeRelative"
+                    id="Listing_hotel_0"
+                    itemscope=""
+                    itemtype="http://schema.org/Hotel"
+                    key={index}
+                    onClick={()=>getHotelId(hotel.id)}
+                    >
+                    <Link to="/hoteldetails"  rel="noopener noreferrer" >
+                      <div className="listingRow bdr ">
+                        <div className="flexOne makeFlex">
+                          <div className="makeFlex flexOne padding20 relative lftCol">
+                            <div className="makeRelative">
+                              <div className="imgGalleryCont">
+                                <div className="imgCont">
+                                  <img
+                                    src={hotel.pictures[1].url}
+                                    height="162"
+                                    width="243"
+                                    alt="hotelImg"
+                                  />
+                                </div>
+                                <div className="imgThumbList">
+                                {hotel.pictures.map((picture,index)=>{
+                                  return <><span className="imgThumbCont" key={index}>
+                                    <img
+                                      className="imgThumb"
+                                      src={picture.url}
+                                      alt="hotel_image_1"
+                                    />
+                                  </span>
+                                    {index===hotel.pictures.length-1?<span className="imgThumbCont" key={index}>
+                                    <img
+                                      className="imgThumb"
+                                      src={picture.url}
+                                      alt="hotel_image_1"
+                                    />
+                                  <span className="viewAllText">View All</span>
+                                  </span>
+                                  :<></>}
+                                  </>
+                                })}
+
+                                </div>
+                              </div>
+                            </div>
+                            <div className="flexOne appendLeft20">
+                              <div className="makeFlex row spaceBetween"></div>
+                              <div
+                                className="noShrink"
+                                itemprop="aggregateRating"
+                                itemscope=""
+                                itemtype="http://schema.org/AggregateRating"
+                              >
+                                <div className="makeFlex left appendBottom10 hrtlCenter whiteText">
+                                  <div className="mmtRatingTooltipCont">
+                                    <span
+                                      className={`rating font12 latoBlack ${hotel.averageRatings>4?"lightGreenBg":"lightGreenBg"}`}
+                                      id="hlistpg_hotel_user_rating"
+                                    >
+                                      <span itemprop="ratingValue">{hotel.averageRatings}</span>
+                                    </span>
+                                    <span className="ratingText darkGreyText latoBlack font12 appendLeft3">
+                                      {hotel.averageRatings>4.5?"Excellent":hotel.averageRatings>4?"Very Good":hotel.averageRatings>3?"Good":"Poor"}
+                                    </span>
+                                    <div className="mmtRatingTooltip zIndex1">
+                                      <p className="latoRegular font11 blackText appendBottom15">
+                                        Based on
+                                        <span className="latoBold">8077</span>
+                                        Ratings and
+                                        <span className="latoBold">4892</span>
+                                        Verified reviews
+                                      </p>
+                                      <div className="makeFlex spaceBetween appendTop18">
+                                        <div className="ratingCol">
+                                          <p className="makeFlex spaceBetween appendBottom5">
+                                            <span className="latoRegular font11 grayText">
+                                              Safety and Hygiene
+                                            </span>
+                                            <span className="latoBold font11 blackText">
+                                              4.2
+                                            </span>
+                                          </p>
+                                          <div className="ratingBarOuter">
+                                            <div
+                                              className="ratingBarInnder good"
+                                              style={{ width: "calc(84%)" }}
+                                            ></div>
+                                          </div>
+                                        </div>
+                                        <div className="ratingCol">
+                                          <p className="makeFlex spaceBetween appendBottom5">
+                                            <span className="latoRegular font11 grayText">
+                                              Cleanliness
+                                            </span>
+                                            <span className="latoBold font11 blackText">
+                                              4.3
+                                            </span>
+                                          </p>
+                                          <div className="ratingBarOuter">
+                                            <div
+                                              className="ratingBarInnder excellent"
+                                              style={{ width: "calc(86%)" }}
+                                            ></div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div className="makeFlex spaceBetween appendTop18">
+                                        <div className="ratingCol">
+                                          <p className="makeFlex spaceBetween appendBottom5">
+                                            <span className="latoRegular font11 grayText">
+                                              Location
+                                            </span>
+                                            <span className="latoBold font11 blackText">
+                                              4.2
+                                            </span>
+                                          </p>
+                                          <div className="ratingBarOuter">
+                                            <div
+                                              className="ratingBarInnder good"
+                                              style={{ width: "calc(84%)" }}
+                                            ></div>
+                                          </div>
+                                        </div>
+                                        <div className="ratingCol">
+                                          <p className="makeFlex spaceBetween appendBottom5">
+                                            <span className="latoRegular font11 grayText">
+                                              Room
+                                            </span>
+                                            <span className="latoBold font11 blackText">
+                                              4.2
+                                            </span>
+                                          </p>
+                                          <div className="ratingBarOuter">
+                                            <div
+                                              className="ratingBarInnder good"
+                                              style={{ width: "calc(84%)" }}
+                                            ></div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div className="makeFlex spaceBetween appendTop18">
+                                        <div className="ratingCol">
+                                          <p className="makeFlex spaceBetween appendBottom5">
+                                            <span className="latoRegular font11 grayText">
+                                              Value for Money
+                                            </span>
+                                            <span className="latoBold font11 blackText">
+                                              4.1
+                                            </span>
+                                          </p>
+                                          <div className="ratingBarOuter">
+                                            <div
+                                              className="ratingBarInnder good"
+                                              style={{ width: "calc(82%)" }}
+                                            ></div>
+                                          </div>
+                                        </div>
+                                        <div className="ratingCol">
+                                          <p className="makeFlex spaceBetween appendBottom5">
+                                            <span className="latoRegular font11 grayText">
+                                              Hospitality
+                                            </span>
+                                            <span className="latoBold font11 blackText">
+                                              4.1
+                                            </span>
+                                          </p>
+                                          <div className="ratingBarOuter">
+                                            <div
+                                              className="ratingBarInnder good"
+                                              style={{ width: "calc(82%)" }}
+                                            ></div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div className="makeFlex spaceBetween appendTop18">
+                                        <div className="ratingCol">
+                                          <p className="makeFlex spaceBetween appendBottom5">
+                                            <span className="latoRegular font11 grayText">
+                                              Facilities
+                                            </span>
+                                            <span className="latoBold font11 blackText">
+                                              4.1
+                                            </span>
+                                          </p>
+                                          <div className="ratingBarOuter">
+                                            <div
+                                              className="ratingBarInnder good"
+                                              style={{ width: "calc(82%)" }}
+                                            ></div>
+                                          </div>
+                                        </div>
+                                        <div className="ratingCol">
+                                          <p className="makeFlex spaceBetween appendBottom5">
+                                            <span className="latoRegular font11 grayText">
+                                              Food
+                                            </span>
+                                            <span className="latoBold font11 blackText">
+                                              4.1
+                                            </span>
+                                          </p>
+                                          <div className="ratingBarOuter">
+                                            <div
+                                              className="ratingBarInnder good"
+                                              style={{ width: "calc(82%)" }}
+                                            ></div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div className="makeFlex spaceBetween appendTop18">
+                                        <div className="ratingCol">
+                                          <p className="makeFlex spaceBetween appendBottom5">
+                                            <span className="latoRegular font11 grayText">
+                                              Child friendliness
+                                            </span>
+                                            <span className="latoBold font11 blackText">
+                                              4
+                                            </span>
+                                          </p>
+                                          <div className="ratingBarOuter">
+                                            <div
+                                              className="ratingBarInnder good"
+                                              style={{ width: "calc(80%)" }}
+                                            ></div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <span className="font12 capText blackText appendLeft3">
+                                      <span
+                                        className="blackText"
+                                        id="hlistpg_hotel_reviews_count"
+                                        itemprop="reviewCount"
+                                      >
+                                        ({hotel.reviewsCount}
+                                      </span>
+                                      &nbsp;Ratings)
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="makeFlex spaceBetween">
+                                <div>
+                                  <p
+                                    className="latoBlack font22 blackText"
+                                    id="hlistpg_hotel_name"
+                                    itemprop="name"
+                                  >
+                                    <span
+                                      className="wordBreak appendRight10"
+                                      id="htl_id_seo_201309021636532583"
+                                    >
+                                    {hotel.name} , {hotel.address.street} , {hotel.address.state}
+                                    </span>
+                                    <span className="sprite rating_blank" itemprop="starRating" itemscope="" itemtype="http://schema.org/Rating"><span itemprop="ratingValue" data-content="4" className="sprite rating_fill ratingFour" id="hlistpg_hotel_star_rating"></span></span>
+
+                                  </p>
+                                </div>
+                              </div>
+                              <div className="appendTop5">
+                                <div className="addrContainer">
+                                  <div
+                                    className="tile__placeHolder font12 font12 latoBold appendBottom5 grayText pc__middle"
+                                    itemprop="address"
+                                  >
+                                    <div className="makeFlex persuasion">
+                                      <div className="persuasion__item pc__location">
+                                        <div className="pc__html">
+                                          <span className="blueText">
+                                          {hotel.address.city}
+                                          </span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="tile__placeHolder font12 pc__middle">
+                                  <div className="persuasion pc__inclusionsList">
+                                    <div className="persuasion__item pc__inclusion font12 darkGreyText">
+                                      <span className="sprite grayDot"></span>
+                                      <span>Book now @ just ₹1 available</span>
+                                      {/* <span>{hotel.description}</span> */}
+                                      <div className="persuasion__toolTip pc__customTooltip"></div>
+                                    </div>
+                                    <div className="persuasion__item pc__inclusion font12 darkGreyText">
+                                      <span className="sprite grayDot"></span>
+                                      <div className="pc__html">
+                                        Breakfast available at extra charges
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="tile__placeHolder font12 pc__middle">
+                                  <div className="persuasion">
+                                    <div className="persuasion__item pc__peitho">
+                                      <span className="sprite lightningAlertIcon"></span>
+                                      <span>
+                                        Great Choice! Booked 200+ times in last 15
+                                        Days
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="priceDetails textRight">
+                            <div
+                              className="tile__priceSection"
+                              style={{ backgroundPositionX: "8px" }}
+                            >
+                              <div className="padding20 makeFlex column appendTopAuto">
+                                <p className="makeFlex hrtlCenter right appendBottom10 directionRtl" style={{marginBottom:"10px"}}></p>
+                                <p
+                                  className="grayText font16 lineThrough appendBottom5"
+                                  id="hlistpg_hotel_cut_price"
+                                  style={{marginBottom:"5px"}}
+                                >
+                                  ₹ 6,960
+                                </p>
+                                <div>
+                                  <p
+                                    className="latoBlack font26 blackText appendBottom5"
+                                    id="hlistpg_hotel_shown_price"
+                                    style={{marginBottom:"5px"}}
+                                  >
+                                    ₹ {hotel.rooms[0].price}
+                                  </p>
+                                </div>
+                                <p className="font12 darkGreyText">
+                                  + ₹ {getTax(hotel.rooms[0].price)} taxes &amp; fees
+                                </p>
+                                <p className="font10 grayText appendBottom5" style={{marginBottom:"5px"}}>
+                                  Per Night
+                                </p>
+                                {/* <div className="tile__placeHolder font12 pc__right">
+                                  <div className="dealOftheDay whiteText pc__dealTimer persuasion__item pc__dealTimer">
+                                    <p className="font11 appendBottom5" style={{marginBottom:"5px"}}>
+                                      DEAL OF THE DAY
+                                    </p>
+                                    <p className="latoBlack font16 makeFlex hrtlCenter right">
+                                      <span className="sprite appendRight5 timeIconSmall"></span>
+                                      <span>07:58:04</span>
+                                    </p>
+                                  </div>
+                                </div> */}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                    </div>
+                  </>
+                  )
+                })}
+
+{/*
                   <a
                     className=""
                     href="//www.makemytrip.com/hotels/hotel-details?hotelId=201309021636532583&amp;_uCurrency=INR&amp;checkin=10272022&amp;checkout=10282022&amp;city=CTDEL&amp;country=IN&amp;lat=28.57961&amp;lng=77.0562&amp;locusId=CTDEL&amp;locusType=city&amp;rank=1&amp;regionNearByExp=3&amp;roomStayQualifier=2e0e&amp;searchText=Delhi&amp;visitorId=7fed1745-437a-4dfd-80a5-b0c5f8be72ba&amp;mtkeys=defaultMtkey"
                     target="_blank"
-                    rel="nofollow"
+                    rel="nofollow noreferrer"
                   >
                     <div className="listingRow bdr ">
                       <div className="flexOne makeFlex">
@@ -392,7 +811,8 @@ export class HotelListingContainer extends React.Component {
                       </div>
                     </div>
                   </a>
-                </div>
+                  */}
+                
               </div>
               <div
                 className="listingRowOuter hotelTileDt makeRelative"
@@ -400,11 +820,12 @@ export class HotelListingContainer extends React.Component {
                 itemscope=""
                 itemtype="http://schema.org/Hotel"
               >
+              {/*
                 <a
                   className=""
                   href="//www.makemytrip.com/hotels/hotel-details?hotelId=201310291236003196&amp;_uCurrency=INR&amp;checkin=10272022&amp;checkout=10282022&amp;city=CTDEL&amp;country=IN&amp;lat=28.52183&amp;lng=77.21418&amp;locusId=CTDEL&amp;locusType=city&amp;rank=2&amp;regionNearByExp=3&amp;roomStayQualifier=2e0e&amp;searchText=Delhi&amp;viewType=PREMIUM&amp;visitorId=7fed1745-437a-4dfd-80a5-b0c5f8be72ba&amp;mtkeys=defaultMtkey"
                   target="_blank"
-                  rel="nofollow"
+                  rel="nofollow noreferrer"
                 >
                   <div className="listingRow bdr ">
                     <div className="flexOne makeFlex">
@@ -807,6 +1228,7 @@ export class HotelListingContainer extends React.Component {
                     </div>
                   </div>
                 </a>
+                */}
               </div>
               <div
                 className="listingRowOuter hotelTileDt makeRelative"
@@ -814,11 +1236,12 @@ export class HotelListingContainer extends React.Component {
                 itemscope=""
                 itemtype="http://schema.org/Hotel"
               >
+              {/*
                 <a
                   className=""
                   href="//www.makemytrip.com/hotels/hotel-details?hotelId=202103042000151680&amp;_uCurrency=INR&amp;checkin=10272022&amp;checkout=10282022&amp;city=CTDEL&amp;country=IN&amp;lat=28.55016&amp;lng=77.12885&amp;locusId=CTDEL&amp;locusType=city&amp;rank=3&amp;regionNearByExp=3&amp;roomStayQualifier=2e0e&amp;searchText=Delhi&amp;visitorId=7fed1745-437a-4dfd-80a5-b0c5f8be72ba&amp;mtkeys=defaultMtkey"
                   target="_blank"
-                  rel="nofollow"
+                  rel="nofollow noreferrer"
                 >
                   <div className="listingRow bdr ">
                     <div className="flexOne makeFlex">
@@ -1212,6 +1635,7 @@ export class HotelListingContainer extends React.Component {
                     </div>
                   </div>
                 </a>
+                */}
               </div>
               <div className="appendBottom20">
                 <div className="vsHotelContainer">
@@ -1284,11 +1708,12 @@ export class HotelListingContainer extends React.Component {
                 itemscope=""
                 itemtype="http://schema.org/Hotel"
               >
+              {/*
                 <a
                   className=""
                   href="//www.makemytrip.com/hotels/hotel-details?hotelId=201007011525075813&amp;_uCurrency=INR&amp;checkin=10272022&amp;checkout=10282022&amp;city=CTDEL&amp;country=IN&amp;lat=28.55006&amp;lng=77.12874&amp;locusId=CTDEL&amp;locusType=city&amp;rank=4&amp;regionNearByExp=3&amp;roomStayQualifier=2e0e&amp;searchText=Delhi&amp;viewType=BUDGET&amp;visitorId=7fed1745-437a-4dfd-80a5-b0c5f8be72ba&amp;mtkeys=defaultMtkey"
                   target="_blank"
-                  rel="nofollow"
+                  rel="nofollow noreferrer"
                 >
                   <div className="listingRow bdr ">
                     <div className="flexOne makeFlex">
@@ -1785,6 +2210,7 @@ export class HotelListingContainer extends React.Component {
                     </div>
                   </div>
                 </a>
+                */}
               </div>
               <div
                 className="listingRowOuter hotelTileDt makeRelative"
@@ -1792,11 +2218,12 @@ export class HotelListingContainer extends React.Component {
                 itemscope=""
                 itemtype="http://schema.org/Hotel"
               >
+              {/*
                 <a
                   className=""
                   href="//www.makemytrip.com/hotels/hotel-details?hotelId=201204171409525440&amp;_uCurrency=INR&amp;checkin=10272022&amp;checkout=10282022&amp;city=CTDEL&amp;country=IN&amp;lat=28.64105&amp;lng=77.21378&amp;locusId=CTDEL&amp;locusType=city&amp;rank=5&amp;regionNearByExp=3&amp;roomStayQualifier=2e0e&amp;searchText=Delhi&amp;viewType=BUDGET&amp;visitorId=7fed1745-437a-4dfd-80a5-b0c5f8be72ba&amp;mtkeys=defaultMtkey"
                   target="_blank"
-                  rel="nofollow"
+                  rel="nofollow noreferrer"
                 >
                   <div className="listingRow bdr ">
                     <div className="flexOne makeFlex">
@@ -2287,6 +2714,7 @@ export class HotelListingContainer extends React.Component {
                     </div>
                   </div>
                 </a>
+                */}
               </div>
               <div className="appendBottom20">
                 <div className="resumeSearch bdr padding20">

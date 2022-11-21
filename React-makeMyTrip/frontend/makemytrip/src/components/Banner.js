@@ -16,39 +16,36 @@ import { Modal } from "./__test__/modal";
 import Button from "react-bootstrap/Button";
 import { MyVerticallyCenteredModal } from "./__test__/modal";
 import { FloatingNavbar } from "./floatingNavbar";
+import DateTimeSelector from "./DateTimeSelector";
+
 export const Banner = () => {
   const [showFloatNav, setFloatNavVisibility] = useState(true);
-  const [modalShow, setModalShow] = React.useState(false);
+  const [modalShow, setModalShow] = useState(false);
 
   let navigate = useNavigate();
   const handleSearch = () => {
     navigate("/search");
   };
+
+
+
   return (
     <>
-      {/* <div style={{ position: "sticky", top: "0", zIndex: "20" }}>
-        <NavBar></NavBar>
-      </div> */}
       <div className="container-holder">
-        {/* <img
-          className="logo"
-          src="https://imgak.mmtcdn.com/pwa_v3/pwa_hotel_assets/header/mmtLogoWhite.png"
-          alt=""
-        /> */}
         <LandingContainer></LandingContainer>
         {showFloatNav ? <FloatingNavbar></FloatingNavbar> : <></>}
         <div
           className="tickets"
           style={{ marginTop: "-30px", paddingTop: "30px" }}
         >
-          <div class="hsw-seo-header makeFlex perfectCenter">
+          <div className="hsw-seo-header makeFlex perfectCenter">
             <h1>
               Book
-              <a href="/hotels/" class="darkGreyText">
+              <a href="/hotels/" className="darkGreyText">
                 Domestic
               </a>
               and
-              <a href="/hotels-international/" class="darkGreyText">
+              <a href="/hotels-international/" className="darkGreyText">
                 International
               </a>
               Property Online. To list your property
@@ -57,50 +54,46 @@ export const Banner = () => {
               </a>
             </h1>
           </div>
-
-          {/* <div className="ticket-type">
-            <span className="selected-ticket-type" id="oneway">
-              <input type="radio" hidden />
-              <i className="fa-solid fa-check-circle"></i> ONEWAY
-            </span>
-            <span>
-              <input type="radio" />
-              <span hidden>
-                <i className="fa-solid fa-check-circle"></i>
-              </span>
-              ROUND TRIP
-            </span>
-            <span>
-              <input type="radio" />
-              <span hidden>
-                <i className="fa-solid fa-check-circle"></i>
-              </span>
-              MULTI CITY
-            </span>
+          {/* <div class="hsw_inner">
+              <div class="hsw_inputBox selectHtlCity">
+                  <label for="city">
+                      <span data-cy="hotelCityLabel" class="lbl_input latoBold appendBottom5">City, Property name or Location</span>
+                      <input data-cy="city" id="city" type="text" class="hsw_inputField lineHeight36 latoBlack font30" dir="ltr" readonly="" value="Goa" />
+                      <p data-cy="hotelCountryLabel" class="code">India</p>
+                  </label>
+              </div>
+              <div class="hsw_inputBox dates">
+                  <label for="checkin">
+                      <span class="lbl_input latoBold appendBottom5">CHECK-IN</span><input data-cy="checkin" id="checkin" type="text" readonly="" />
+                      <p data-cy="checkInDate" class="blackText font20 code"><span class="font30 lineHeight36 latoBlack">14</span><span> Nov</span><span class="shortYear">22</span></p>
+                      <p class="code">Monday</p>
+                  </label>
+              </div>
+              <div class="hsw_inputBox dates">
+                  <label for="checkout">
+                      <span class="lbl_input latoBold appendBottom5">CHECK-OUT</span><input data-cy="checkout" id="checkout" type="text" readonly="" />
+                      <p data-cy="checkOutDate" class="blackText font20 code"><span class="font30 lineHeight36 latoBlack">15</span><span> Nov</span><span class="shortYear">22</span></p>
+                      <p class="code">Tuesday</p>
+                  </label>
+                  <p class="dateErrorMsg whiteText" id="range_error">You are booking hotel for more than 30 days</p>
+              </div>
+              <div class="hsw_inputBox roomGuests">
+                  <label for="guest">
+                      <span data-cy="guestLabel" class="lbl_input latoBold appendBottom5">ROOMS &amp; GUESTS</span><input data-cy="guest" id="guest" type="text" class="hsw_inputField guests font20" readonly="" />
+                      <p data-cy="roomGuestCount" class="blackText font20 code truncate">
+                          <span class="appendRight10">
+                              <span class="font30 lineHeight36 latoBlack">1</span><span> Room </span><span class="font30 lineHeight36 latoBlack appendRight5">2</span><span class="appendRight5">Adults</span>
+                              <span class="font30 lineHeight36 latoBlack appendRight5">2</span><span>Children</span>
+                          </span>
+                      </p>
+                  </label>
+              </div>
           </div> */}
-          <div className="flight-search">
-            <PlaceSelector
-              caption="CITY, PROPERTY NAME OR LOCATION"
-              city="Delhi"
-              airport="India"
-            ></PlaceSelector>
-            <CitySelector></CitySelector>
 
-            <TimeSelector
-              caption="CHECK-IN"
-              date="9"
-              month="Sep"
-              year="22"
-              day="Monday"
-            ></TimeSelector>
-            <TimeSelector
-              caption="CHECK-OUT"
-              date="9"
-              month="Sep"
-              year="22"
-              day="Monday"
-            ></TimeSelector>
-            <CategorySelector roomCount="1" personCount="2"></CategorySelector>
+          <div className="hsw_inner_Banner">
+            <PlaceSelector></PlaceSelector>
+            <DateTimeSelector/>
+            <CategorySelector ></CategorySelector>
           </div>
           <div className="fare-search">
             <span className="fare-select">Select A Fare Type:</span>
@@ -121,21 +114,14 @@ export const Banner = () => {
           </div>
 
           <div
-            class="search-button"
-            style={{ zIndex: "20", cursor: "pointer" }}
+            className="search-button"
+            style={{ zIndex: "1", cursor: "pointer" }}
             onClick={handleSearch}
           >
             SEARCH
           </div>
         </div>
       </div>
-      {/* <Button variant="primary">Launch vertically centered modal</Button> */}
-
-      {/* <button onClick={() => setModalShow(true)}>LOGIN</button> */}
-      {/* <MyVerticallyCenteredModal
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-      /> */}
     </>
   );
 };

@@ -1,17 +1,18 @@
-import React from "react";
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import React,{useState} from "react";
 import { Icon } from "./icon";
 import { icons } from "../utils/iconsInfo";
 import LoginModal from "./LoginModal";
+import { DropDown } from "./dropDown";
+import {useSelector} from "react-redux";
+// import {UserContext} from "./../api/user"
+import ToggleButton from './ToggleButton';
 
 export const LandingContainer = () => {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {
-    console.log("open");
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const user= useSelector((state)=>state.user)
+
+  const [isShown, setIsShown] = useState(false);
+  console.log("rendering landing ",user)
   return (
     <>
       <div
@@ -106,14 +107,23 @@ export const LandingContainer = () => {
               </p>
             </div>
           </li>
+          {Object.keys(user).length!==0?<li data-cy="account" className="makeFlex hrtlCenter font10 makeRelative lhUser userLoggedIn" style={{padding:"10px"}}>
+              <span className="userNameIcon whiteText makeFlex perfectCenter latoBlack appendRight10"><span>T</span></span>
+              <div className="makeFlex column userNameText latoBold" onMouseEnter={() => setIsShown(true)} onMouseLeave={() => setIsShown(false)}>
+                <p data-cy="loggedInUser" className="whiteText appendBottom3 truncate font11 lineHeight16" style={{margin:"0px",marginRight:"20px"}}>
+                Hi Traveller
+                </p>
+                {isShown && <DropDown></DropDown>}
+              </div>
+          </li>:
           <li
             data-cy="account"
             className="makeFlex hrtlCenter font10 makeRelative lhUser userLoggedOut"
             style={{ cursor: "pointer" }}
-            onClick={handleOpen}
+            // onClick={handleOpen}
           >
             <LoginModal></LoginModal>
-          </li>
+          </li>}
           <li className="makeFlex column makeRelative vrtlCenter conCurLang geoSwitcher">
             <div
               data-cy="LanguageSwitcherWidget"
@@ -129,6 +139,7 @@ export const LandingContainer = () => {
               ></span>
             </div>
           </li>
+          <li style={{marginLeft:"10px",paddingLeft:"10px"}}><ToggleButton /></li>
         </ul>
       </div>
     </>

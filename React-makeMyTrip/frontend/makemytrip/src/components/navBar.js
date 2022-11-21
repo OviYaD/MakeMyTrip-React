@@ -1,19 +1,25 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { Icon } from "./icon";
 import { icons } from "../utils/iconsInfo";
 import { IconList } from "./iconList";
+import Nav from 'react-bootstrap/Nav';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import { DropDown } from "./dropDown";
+import {Link} from "react-router-dom";
+import ToggleButton from './ToggleButton';
+
+
 export const NavBar = () => {
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(false);
+  const [isShown, setIsShown] = useState(false);
 
-  // new function:
+  
+
   const handleScroll = () => {
-    // find current scroll position
     const currentScrollPos = window.pageYOffset;
-
-    // set state based on location info (explained in more detail below)
     setVisible(currentScrollPos > 200);
-
     setPrevScrollPos(currentScrollPos);
   };
 
@@ -39,16 +45,16 @@ export const NavBar = () => {
           <div className="chHeaderWrapper">
             <div className="chHeaderContainer">
               <span className="logoContainer">
-                <a href="" className="chMmtLogo">
+                <Link to="/" className="chMmtLogo">
                   <img
                     src="https://imgak.mmtcdn.com/pwa_v3/pwa_hotel_assets/header/logo@2x.png"
                     alt=""
                   />
-                </a>
+                </Link>
               </span>
               <nav>
                 <ul className="makeFlex font12">
-                  {icons.map((icon, index) => {
+                  {icons.slice(0,8).map((icon, index) => {
                     return (
                       <IconList
                         key={index}
@@ -59,6 +65,14 @@ export const NavBar = () => {
                       ></IconList>
                     );
                   })}
+                  <li data-cy="menu_More" class="moreItem menu_More">
+                    <span class="itemWrapper makeFlex hrtlCenter column moreWrapper">
+                        <span class="chNavIcon appendBottom2 chSprite chMore"></span>
+                        <span class="chNavText">
+                            <span class="darkGreyText">More </span><span class="arrow arrowDown"></span>
+                        </span>
+                    </span>
+                  </li>
                 </ul>
               </nav>
               <ul className="makeFlex hrtlCenter font10 blackText">
@@ -77,13 +91,15 @@ export const NavBar = () => {
                     <span className="userInfoBoxLabel whiteText appendRight10 font10 latoBlack textCenter">
                       <span>T</span>
                     </span>
-                    <div className="makeFlex hrtlCenter">
+                    <div className="makeFlex hrtlCenter" onMouseEnter={() => setIsShown(true)}
+        onMouseLeave={() => setIsShown(false)}>
                       <div className="makeFlex column">
                         <span
                           className="chUserInfoName latoBold"
                           style={{ marginLeft: "5px" }}
                         >
                           Hi Traveller
+                          {isShown && <DropDown></DropDown>}
                         </span>
                       </div>
                       <span className="arrow arrowDown"></span>
@@ -103,6 +119,14 @@ export const NavBar = () => {
                       <span className="arrow arrowDown appendLeft10 appendTop2"></span>
                     </p>
                   </div>
+                </li>
+              </ul>
+              <ul className="makeFLex hrtlCenter font10 blackText">
+              <li
+                  className="makeFlex hrtlCenter font10 blackText appendLeft20 countryChanger"
+                  style={{ marginTop: "13px" }}
+                >
+                  <ToggleButton/>
                 </li>
               </ul>
             </div>
