@@ -3,7 +3,7 @@ import React from "react";
 export const Description = () => {
   return (
     <>
-      <div class="description">
+      <div className="description">
         <h1>PRODUCT OFFERING</h1>
         <p>
           Flights, International Flights, Charter Flights, Hotels, International
