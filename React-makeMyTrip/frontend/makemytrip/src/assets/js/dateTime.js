@@ -569,19 +569,19 @@ class DatePicker extends HTMLElement {
     const date = this.date.format(this.format);
     this.shadow.innerHTML = `
       <style>${this.style}</style>
-      <button type="button" class="date-toggle">${date}</button>
-      <div class="calendar-dropdown ${this.visible ? "visible" : ""} ${
+      <button type="button" className="date-toggle">${date}</button>
+      <div className="calendar-dropdown ${this.visible ? "visible" : ""} ${
       this.position
     }">
-        <div class="header">
-            <button type="button" class="prev-month" aria-label="previous month"></button>
+        <div className="header">
+            <button type="button" className="prev-month" aria-label="previous month"></button>
             <h4 tabindex="0" aria-label="current month ${monthYear}">
               ${monthYear}
             </h4>
-            <button type="button" class="prev-month" aria-label="next month"></button>
+            <button type="button" className="prev-month" aria-label="next month"></button>
         </div>
-        <div class="week-days">${this.getWeekDaysElementStrings()}</div>
-        <div class="month-days"></div>
+        <div className="week-days">${this.getWeekDaysElementStrings()}</div>
+        <div className="month-days"></div>
       </div>
     `;
   }
