@@ -4,16 +4,16 @@ export default class ImageCardHori extends React.Component {
   render() {
     return (
       <>
-        <div class="card-pair swiper-slide">
-          <div class="horizontal-card">
-            <div class="left-content">
+        <div className="card-pair swiper-slide">
+          <div className="horizontal-card">
+            <div className="left-content">
               <img
                 src="https://promos.makemytrip.com/notification/xhdpi//116X116-jazeera-26092022.jpg"
                 alt=""
               />
               <p>T and C's Apply</p>
             </div>
-            <div class="right-content">
+            <div className="right-content">
               <p>DOM FLIGHTS</p>
               <h3>FOR YOU: Up to 35% OFF* ON Domestic Flights</h3>
               <hr align="left" />
@@ -27,15 +27,15 @@ export default class ImageCardHori extends React.Component {
               </div>
             </div>
           </div>
-          <div class="horizontal-card" style={{ marginTop: "20px" }}>
-            <div class="left-content">
+          <div className="horizontal-card" style={{ marginTop: "20px" }}>
+            <div className="left-content">
               <img
                 src="https://promos.makemytrip.com/notification/xhdpi//116X116-jazeera-26092022.jpg"
                 alt=""
               />
               <p>T and C's Apply</p>
             </div>
-            <div class="right-content">
+            <div className="right-content">
               <p>DOM FLIGHTS</p>
               <h3>FOR YOU: Up to 35% OFF* ON Domestic Flights</h3>
               <hr align="left" />

@@ -1,4 +1,5 @@
-import React from "react";
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import React,{useEffect} from "react";
 // import { filters } from "../utils/filterList";
 import {
   useQueryParam,
@@ -7,19 +8,39 @@ import {
   ArrayParam,
   DelimitedNumericArrayParam
 } from "use-query-params";
+import { getFilters } from "../services/filters";
+import {useSelector,useDispatch } from 'react-redux';
+import {setFilters} from '../redux/slices/filterSlice';
 
 export const FilterWrapper = ({
-  handleChange,
-  selectedItems,
   handleCancel,
-  filters,
-  handleClear
+  handleClear,
+  handleUpdateParam
 }) => {
+  const filters=useSelector((state)=>state.filters);
+  const selectedItems=useSelector((state)=>state.selectedItem);
+  const dispatch = useDispatch()
   const [min, setMin] = useQueryParam("minRating", DelimitedNumericArrayParam);
   const [max, setMax] = useQueryParam("maxRating", DelimitedNumericArrayParam);
-  const [minRating, setMinRating] = useQueryParam("minRating", NumberParam);
+  const [minRating, setMinRating] = useQueryParam("minReview", NumberParam);
   const [amenities, setAmenities] = useQueryParam("amenities", ArrayParam);
   const [rules, setRules] = useQueryParam("rules", ArrayParam);
+
+  // console.log("selected items.......",selectedItem);
+
+  useEffect(()=>{
+    const fetchUser=async()=>{
+      const filters = await getFilters();
+      // console.log("filters inside filterwrapper",filters)
+      dispatch(setFilters(filters))
+      // console.log("from redux",filterList);
+      // setUserInfo(user);
+    }
+    fetchUser();
+
+  },[]);
+
+
   return (
     <>
       <div
@@ -34,29 +55,29 @@ export const FilterWrapper = ({
         </div> */}
         <div className="appendBottom35">
           {selectedItems.length !== 0 ? (
-            <div class="appendBottom15 bdrBottom">
-              <div class="makeFlex spaceBetween end appendBottom20">
-                <span class="latoBold font20 blackText">Applied Filters</span>
+            <div className="appendBottom15 bdrBottom">
+              <div className="makeFlex spaceBetween end appendBottom20">
+                <span className="latoBold font20 blackText">Applied Filters</span>
                 <a
-                  class="latoBold font12 capText"
+                  className="latoBold font12 capText"
                   href="javascript:void(0)"
                   onClick={handleClear}
                 >
                   Clear
                 </a>
               </div>
-              <div class="appendBottom15">
+              <div className="appendBottom15">
                 {selectedItems.map((item, index) => {
                   return (
-                    <div class="apldFltr__item" key={index}>
-                      <div class="apldFltr__item--left">
-                        <p class="apldFltr__item--text">
-                          <span>{item} </span>
+                    <div className="apldFltr__item" key={index}>
+                      <div className="apldFltr__item--left">
+                        <p className="apldFltr__item--text">
+                          <span>{item.id} </span>
                         </p>
                         <button
-                          class="apldFltr__item--close"
+                          className="apldFltr__item--close"
                           data-testid="removeAppliedFilter"
-                          onClick={() => handleCancel({ item })}
+                          onClick={() => handleCancel( item )}
                         ></button>
                       </div>
                     </div>
@@ -89,7 +110,9 @@ export const FilterWrapper = ({
                             className="inp-check"
                             type="checkbox"
                             id={`₹ ${category.min} - ₹ ${category.max}`}
-                            onChange={handleChange}
+                            onChange={handleUpdateParam}
+                            min={category.min}
+                            max={category.max}
                           />
                           <label for={`₹ ${category.min} - ₹ ${category.max}`}>
                             {`₹ ${category.min} - ₹ ${category.max}`}
@@ -147,9 +170,10 @@ export const FilterWrapper = ({
                           className="inp-check"
                           type="checkbox"
                           id={`${category.star} star`}
-                          onChange={handleChange}
+                          data-star={category.star}
+                          onChange={handleUpdateParam}
                         />
-                        <label for={category.star}>{category.star} star</label>
+                        <label for={`${category.star} star`}>{category.star} star</label>
                       </span>
                       <span className="font12 grayText">
                         ({category.count})
@@ -186,7 +210,8 @@ export const FilterWrapper = ({
                               ? "Very Good"
                               : "Excellence"
                           })`}
-                          onChange={handleChange}
+                          data-minRating={category.minRating}
+                          onChange={handleUpdateParam}
                         />
                         <label
                           for={`${category.minRating} & above (${
@@ -536,378 +561,7 @@ export const FilterWrapper = ({
             <></>
           )}
 
-          {/* <div className="filterRow" id="hlistpg_fr_locality">
-            <p className="latoBold font16 blackText appendBottom15 makeFlex spaceBetween">
-              <span>Locality</span>
-            </p>
-            <div className="locationFtrModal">
-              <div>
-                <p
-                  className="font15 blackText appendTop15 appendBottom15 makeFlex hrtlCenter"
-                  style={{ marginTop: "15px", marginBottom: "15px" }}
-                >
-                  <span>Business &amp; Shopping Hubs:</span>
-                </p>
-                <ul className="filterList">
-                  <li className="">
-                    <span className="checkmarkOuter">
-                      <input
-                        className="inp-check"
-                        type="checkbox"
-                        id="Business &amp; Shopping Hubs:_0"
-                      />
-                      <label
-                        className="makeFlex column"
-                        for="Business &amp; Shopping Hubs:_0"
-                      >
-                        <p className="makeFlex filterList__filterName">
-                          <span>Karol bagh</span>
-                        </p>
-                      </label>
-                    </span>
-                  </li>
-                  <li className="">
-                    <span className="checkmarkOuter">
-                      <input
-                        className="inp-check"
-                        type="checkbox"
-                        id="Business &amp; Shopping Hubs:_1"
-                      />
-                      <label
-                        className="makeFlex column"
-                        for="Business &amp; Shopping Hubs:_1"
-                      >
-                        <p className="makeFlex filterList__filterName">
-                          <span>Lajpat Nagar</span>
-                        </p>
-                      </label>
-                    </span>
-                  </li>
-                  <li className="">
-                    <span className="checkmarkOuter">
-                      <input
-                        className="inp-check"
-                        type="checkbox"
-                        id="Business &amp; Shopping Hubs:_2"
-                      />
-                      <label
-                        className="makeFlex column"
-                        for="Business &amp; Shopping Hubs:_2"
-                      >
-                        <p className="makeFlex filterList__filterName">
-                          <span>Mehrauli</span>
-                        </p>
-                      </label>
-                    </span>
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <p
-                  className="font15 blackText appendTop15 appendBottom15 makeFlex hrtlCenter"
-                  style={{ marginTop: "15px" }}
-                >
-                  <span>Known for Dining &amp; Shopping:</span>
-                </p>
-                <ul className="filterList">
-                  <li className="">
-                    <span className="checkmarkOuter">
-                      <input
-                        className="inp-check"
-                        type="checkbox"
-                        id="Known for Dining &amp; Shopping:_0"
-                      />
-                      <label
-                        className="makeFlex column"
-                        for="Known for Dining &amp; Shopping:_0"
-                      >
-                        <p className="makeFlex filterList__filterName">
-                          <span>Connaught Place</span>
-                        </p>
-                      </label>
-                    </span>
-                  </li>
-                  <li className="">
-                    <span className="checkmarkOuter">
-                      <input
-                        className="inp-check"
-                        type="checkbox"
-                        id="Known for Dining &amp; Shopping:_1"
-                      />
-                      <label
-                        className="makeFlex column"
-                        for="Known for Dining &amp; Shopping:_1"
-                      >
-                        <p className="makeFlex filterList__filterName">
-                          <span>Chandni Chowk</span>
-                        </p>
-                      </label>
-                    </span>
-                  </li>
-                  <li className="">
-                    <span className="checkmarkOuter">
-                      <input
-                        className="inp-check"
-                        type="checkbox"
-                        id="Known for Dining &amp; Shopping:_2"
-                      />
-                      <label
-                        className="makeFlex column"
-                        for="Known for Dining &amp; Shopping:_2"
-                      >
-                        <p className="makeFlex filterList__filterName">
-                          <span>South Delhi</span>
-                        </p>
-                      </label>
-                    </span>
-                  </li>
-                  <li className="">
-                    <span className="checkmarkOuter">
-                      <input
-                        className="inp-check"
-                        type="checkbox"
-                        id="Known for Dining &amp; Shopping:_3"
-                      />
-                      <label
-                        className="makeFlex column"
-                        for="Known for Dining &amp; Shopping:_3"
-                      >
-                        <p className="makeFlex filterList__filterName">
-                          <span>Green Park</span>
-                        </p>
-                      </label>
-                    </span>
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <p
-                  className="font15 blackText appendTop15 appendBottom15 makeFlex hrtlCenter"
-                  style={{ marginBottom: "20px" }}
-                >
-                  <span>Near Transit Hub(s):</span>
-                </p>
-                <ul className="filterList">
-                  <li className="">
-                    <span className="checkmarkOuter">
-                      <input
-                        className="inp-check"
-                        type="checkbox"
-                        id="Near Transit Hub(s):_0"
-                      />
-                      <label
-                        className="makeFlex column"
-                        for="Near Transit Hub(s):_0"
-                      >
-                        <p className="makeFlex filterList__filterName">
-                          <span>Aerocity</span>
-                        </p>
-                      </label>
-                    </span>
-                  </li>
-                  <li className="">
-                    <span className="checkmarkOuter">
-                      <input
-                        className="inp-check"
-                        type="checkbox"
-                        id="Near Transit Hub(s):_1"
-                      />
-                      <label
-                        className="makeFlex column"
-                        for="Near Transit Hub(s):_1"
-                      >
-                        <p className="makeFlex filterList__filterName">
-                          <span>T1 - Delhi Airport (IGI Airpo...</span>
-                        </p>
-                        <div className="infoTooltip whiteText">
-                          T1 - Delhi Airport (IGI Airport)
-                        </div>
-                      </label>
-                    </span>
-                  </li>
-                  <li className="">
-                    <span className="checkmarkOuter">
-                      <input
-                        className="inp-check"
-                        type="checkbox"
-                        id="Near Transit Hub(s):_2"
-                      />
-                      <label
-                        className="makeFlex column"
-                        for="Near Transit Hub(s):_2"
-                      >
-                        <p className="makeFlex filterList__filterName">
-                          <span>T2 - Delhi Airport (IGI Airpo...</span>
-                        </p>
-                        <div className="infoTooltip whiteText">
-                          T2 - Delhi Airport (IGI Airport)
-                        </div>
-                      </label>
-                    </span>
-                  </li>
-                  <li className="">
-                    <span className="checkmarkOuter">
-                      <input
-                        className="inp-check"
-                        type="checkbox"
-                        id="Near Transit Hub(s):_3"
-                      />
-                      <label
-                        className="makeFlex column"
-                        for="Near Transit Hub(s):_3"
-                      >
-                        <p className="makeFlex filterList__filterName">
-                          <span>T3 - Delhi Airport (IGI)</span>
-                        </p>
-                        <div className="infoTooltip whiteText">
-                          T3 - Delhi Airport (IGI)
-                        </div>
-                      </label>
-                    </span>
-                  </li>
-                  <li className="">
-                    <span className="checkmarkOuter">
-                      <input
-                        className="inp-check"
-                        type="checkbox"
-                        id="Near Transit Hub(s):_4"
-                      />
-                      <label
-                        className="makeFlex column"
-                        for="Near Transit Hub(s):_4"
-                      >
-                        <p className="makeFlex filterList__filterName">
-                          <span>New Delhi Railway Station</span>
-                        </p>
-                        <div className="infoTooltip whiteText">
-                          New Delhi Railway Station
-                        </div>
-                      </label>
-                    </span>
-                  </li>
-                  <li className="">
-                    <span className="checkmarkOuter">
-                      <input
-                        className="inp-check"
-                        type="checkbox"
-                        id="Near Transit Hub(s):_5"
-                      />
-                      <label
-                        className="makeFlex column"
-                        for="Near Transit Hub(s):_5"
-                      >
-                        <p className="makeFlex filterList__filterName">
-                          <span>Old Delhi Railway Station</span>
-                        </p>
-                        <div className="infoTooltip whiteText">
-                          Old Delhi Railway Station
-                        </div>
-                      </label>
-                    </span>
-                  </li>
-                  <li className="">
-                    <span className="checkmarkOuter">
-                      <input
-                        className="inp-check"
-                        type="checkbox"
-                        id="Near Transit Hub(s):_6"
-                      />
-                      <label
-                        className="makeFlex column"
-                        for="Near Transit Hub(s):_6"
-                      >
-                        <p className="makeFlex filterList__filterName">
-                          <span>ISBT Kashmere Gate</span>
-                        </p>
-                      </label>
-                    </span>
-                  </li>
-                  <li className="">
-                    <span className="checkmarkOuter">
-                      <input
-                        className="inp-check"
-                        type="checkbox"
-                        id="Near Transit Hub(s):_7"
-                      />
-                      <label
-                        className="makeFlex column"
-                        for="Near Transit Hub(s):_7"
-                      >
-                        <p className="makeFlex filterList__filterName">
-                          <span>Sarai Rohilla Railway Station</span>
-                        </p>
-                        <div className="infoTooltip whiteText">
-                          Sarai Rohilla Railway Station
-                        </div>
-                      </label>
-                    </span>
-                  </li>
-                  <li className="">
-                    <span className="checkmarkOuter">
-                      <input
-                        className="inp-check"
-                        type="checkbox"
-                        id="Near Transit Hub(s):_8"
-                      />
-                      <label
-                        className="makeFlex column"
-                        for="Near Transit Hub(s):_8"
-                      >
-                        <p className="makeFlex filterList__filterName">
-                          <span>Paharganj</span>
-                        </p>
-                      </label>
-                    </span>
-                  </li>
-                  <li className="">
-                    <span className="checkmarkOuter">
-                      <input
-                        className="inp-check"
-                        type="checkbox"
-                        id="Near Transit Hub(s):_9"
-                      />
-                      <label
-                        className="makeFlex column"
-                        for="Near Transit Hub(s):_9"
-                      >
-                        <p className="makeFlex filterList__filterName">
-                          <span>Mahipalpur</span>
-                        </p>
-                      </label>
-                    </span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div className="filterRow" id="LUX_DOM">
-            <div className="latoBold font16 blackText appendBottom15 makeFlex hrtlCenter">
-              MMT Luxe Selections
-            </div>
-            <ul className="filterList">
-              <li className="">
-                <span data-testid="checkboxFilter" className="checkmarkOuter">
-                  <input
-                    aria-label="MMT Luxe Selections"
-                    className="inp-check"
-                    type="checkbox"
-                  />
-                  <label>
-                    <div className="makeFlex hrtlCenter">
-                      <span>MMT Luxe Selections</span>
-                    </div>
-                    <div
-                      className="infoTooltip whiteText"
-                      style={{ left: "0px", top: "0px", position: "fixed" }}
-                    >
-                      Handpicked Luxury Properties
-                    </div>
-                  </label>
-                </span>
-                <span className="font12 grayText">(15)</span>
-              </li>
-            </ul>
-          </div> */}
+          
           {filters.amenities ? (
             <div className="filterRow" id="AMENITIES">
               <div className="latoBold font16 blackText appendBottom15 makeFlex hrtlCenter">
@@ -943,10 +597,11 @@ export const FilterWrapper = ({
                             className="inp-check"
                             type="checkbox"
                             name={category.name}
-                            id={category.id}
-                            onChange={handleChange}
+                            id={category.name}
+                            data-amenities={category.id}
+                            onChange={handleUpdateParam}
                           />
-                          <label for={category.id}>{category.name}</label>
+                          <label for={category.name}>{category.name}</label>
                         </span>
                         <span className="font12 grayText">
                           ({category.count})
@@ -971,78 +626,7 @@ export const FilterWrapper = ({
           ) : (
             <></>
           )}
-          {/* <div className="filterRow" id="SPACE">
-            <img
-              className="prmFltrs__tag appendBottom10"
-              src="https://promos.makemytrip.com/Hotels_product/Contextual%20Filter/Icons/Homestays_tag.png"
-              alt="Booking Preference"
-            />
-            <div className="latoBold font16 blackText appendBottom15 makeFlex hrtlCenter">
-              Booking Preference
-            </div>
-            <ul className="filterList">
-              <li className="">
-                <span data-testid="checkboxFilter" className="checkmarkOuter">
-                  <input
-                    aria-label="Entire Property"
-                    className="inp-check"
-                    type="checkbox"
-                  />
-                  <label>
-                    <div className="makeFlex hrtlCenter">
-                      <span>Entire Property</span>
-                    </div>
-                  </label>
-                </span>
-                <span className="font12 grayText">(119)</span>
-              </li>
-              <li className="">
-                <span data-testid="checkboxFilter" className="checkmarkOuter">
-                  <input
-                    aria-label="Caretaker"
-                    className="inp-check"
-                    type="checkbox"
-                  />
-                  <label>
-                    <div className="makeFlex hrtlCenter">
-                      <span>Caretaker</span>
-                    </div>
-                  </label>
-                </span>
-                <span className="font12 grayText">(773)</span>
-              </li>
-              <li className="">
-                <span data-testid="checkboxFilter" className="checkmarkOuter">
-                  <input
-                    aria-label="Instant Book"
-                    className="inp-check"
-                    type="checkbox"
-                  />
-                  <label>
-                    <div className="makeFlex hrtlCenter">
-                      <span>Instant Book</span>
-                    </div>
-                  </label>
-                </span>
-                <span className="font12 grayText">(1527)</span>
-              </li>
-              <li className="">
-                <span data-testid="checkboxFilter" className="checkmarkOuter">
-                  <input
-                    aria-label="Homestays"
-                    className="inp-check"
-                    type="checkbox"
-                  />
-                  <label>
-                    <div className="makeFlex hrtlCenter">
-                      <span>Homestays</span>
-                    </div>
-                  </label>
-                </span>
-                <span className="font12 grayText">(336)</span>
-              </li>
-            </ul>
-          </div> */}
+          
           {filters.rules ? (
             <div className="filterRow" id="HOUSE_RULES">
               <img
@@ -1062,12 +646,13 @@ export const FilterWrapper = ({
                           <input
                             className="inp-check"
                             type="checkbox"
-                            id={category.id}
-                            name={`${category.name} star`}
-                            onChange={handleChange}
+                            id={category.name}
+                            name={category.name}
+                            onChange={handleUpdateParam}
+                            data-rules={category.id}
                           />
-                          <label for={category.star}>
-                            {category.star} star
+                          <label for={category.name }>
+                            {category.name}
                           </label>
                         </span>
                         <span className="font12 grayText">

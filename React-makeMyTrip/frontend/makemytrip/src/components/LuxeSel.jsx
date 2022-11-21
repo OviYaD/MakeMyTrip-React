@@ -3,8 +3,8 @@ import React from "react";
 export const LuxeSel = () => {
   return (
     <>
-      <div class="luxeSel">
-        <div class="luxeSel__dtl">
+      <div className="luxeSel">
+        <div className="luxeSel__dtl">
           <p
             style={{
               fontSize: "14px",
@@ -15,31 +15,31 @@ export const LuxeSel = () => {
           >
             INTRODUCING
           </p>
-          <h3 class="luxeSel__dtl--hdng">MMT Luxe Selections</h3>
-          <p class="luxeSel__dtl--desc">
+          <h3 className="luxeSel__dtl--hdng">MMT Luxe Selections</h3>
+          <p className="luxeSel__dtl--desc">
             Escape to the epitome of luxury, packed with signature amenities and
             services
           </p>
-          <a href="" class="luxeSel__cta">
+          <a href="" className="luxeSel__cta">
             Learn More
           </a>
         </div>
-        <ul class="luxeSel__list" style={{ display: "flex" }}>
-          <li class="luxeSel__list--item">
+        <ul className="luxeSel__list" style={{ display: "flex" }}>
+          <li className="luxeSel__list--item">
             <a href="">
-              <div class="luxeSel__list--itemImg">
+              <div className="luxeSel__list--itemImg">
                 <img
                   src="https://promos.makemytrip.com/Hotels_product/Luxe/brands.png"
                   alt=""
                 />
               </div>
-              <div class="luxeSel__list--itemDtl">
+              <div className="luxeSel__list--itemDtl">
                 <p
                   style={{
                     fontSize: "20px",
                     lineHeight: "20px",
                     marginBottom: "3px",
-                    color: "#000000",
+                     
                     fontWeight: "900"
                   }}
                 >
@@ -51,21 +51,21 @@ export const LuxeSel = () => {
               </div>
             </a>
           </li>
-          <li class="luxeSel__list--item">
+          <li className="luxeSel__list--item">
             <a href="">
-              <div class="luxeSel__list--itemImg">
+              <div className="luxeSel__list--itemImg">
                 <img
                   src="https://promos.makemytrip.com/Hotels_product/Luxe/brands.png"
                   alt=""
                 />
               </div>
-              <div class="luxeSel__list--itemDtl">
+              <div className="luxeSel__list--itemDtl">
                 <p
                   style={{
                     fontSize: "20px",
                     lineHeight: "20px",
                     marginBottom: "3px",
-                    color: "#000000",
+                     
                     fontWeight: "900"
                   }}
                 >
@@ -77,21 +77,21 @@ export const LuxeSel = () => {
               </div>
             </a>
           </li>
-          <li class="luxeSel__list--item">
+          <li className="luxeSel__list--item">
             <a href="">
-              <div class="luxeSel__list--itemImg">
+              <div className="luxeSel__list--itemImg">
                 <img
                   src="https://promos.makemytrip.com/Hotels_product/Luxe/brands.png"
                   alt=""
                 />
               </div>
-              <div class="luxeSel__list--itemDtl">
+              <div className="luxeSel__list--itemDtl">
                 <p
                   style={{
                     fontSize: "20px",
                     lineHeight: "20px",
                     marginBottom: "3px",
-                    color: "#000000",
+                     
                     fontWeight: "900"
                   }}
                 >
