@@ -1,16 +1,18 @@
 import axios from "axios";
 import {filters } from "../utils/filterList"
 import { HotelsDetail} from "../utils/HotelsDetail";
+const {END_POINT} = process.env
+
 export const getFilters = async () => {
   // const filters = await axios.get(
-  //   "https://f6219402-b819-4a26-a094-d328462092b8.mock.pstmn.io/filters/filter-list"
+  //   `${END_POINTS}/filters/filter-list`
   // );
   // return filters.data;
   return filters;
 };
 
 export const fetchRulesList = async() => {
-  // const rules = await axios.get("https://f6219402-b819-4a26-a094-d328462092b8.mock.pstmn.io/filters/rule-list");
+  // const rules = await axios.get(`${END_POINTS}/filters/rule-list`);
   // return rules;
   return [
     {
@@ -104,7 +106,7 @@ export const fetchRulesList = async() => {
   ]
 }
 export const getCities = async () => {
-  // const cities=await axios.get("https://f6219402-b819-4a26-a094-d328462092b8.mock.pstmn.io/filters/city-list");
+  // const cities=await axios.get(`${END_POINT}/filters/city-list`);
   // return getCities.data;
   return [
     {
@@ -141,7 +143,7 @@ export const getCities = async () => {
 
 export const getHotelsByFilters = async (params) => {
   // const hotelDetails = await axios.get(
-  //   "https://f6219402-b819-4a26-a094-d328462092b8.mock.pstmn.io/hotels/hotel-listings?checkIn=2022-09-25&checkOut=2022-09-27&starCategory=5",params
+  //   `${END_POINT}/hotels/hotel-listings`,params
   // );
   // console.log(hotelDetails.data);
   return HotelsDetail;
